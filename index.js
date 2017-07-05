@@ -96,18 +96,7 @@ function create() {
     arrow.body.allowGravity = false;
     arrow.alpha = 0;
 
-    ball = game.add.sprite(205, 360, 'ball');
-    game.physics.enable(ball, Phaser.Physics.ARCADE);
-    ball.anchor.setTo(0.5, 0.5);
-    ball.body.collideWorldBounds = false;
-    ball.body.bounce.setTo(0.9, 0.9);
-
-    // Enable input.
-    ball.body.allowGravity = false;
-    ball.inputEnabled = true;
-    ball.input.start(0, true);
-    ball.events.onInputDown.add(set);
-    ball.events.onInputUp.add(launch);
+    createBall();
 }
 
 function set(ball) {
@@ -148,4 +137,27 @@ function update() {
 function render() {
     game.debug.text("Drag the ball and release to launch", 32, 32);
     game.debug.bodyInfo(ball, 32, 64);
+}
+
+function replaceBall() {
+    ball.destroy();
+    createBall();
+}
+
+function createBall() {
+    ball = game.add.sprite(205, 360, 'ball');
+    game.physics.enable(ball, Phaser.Physics.ARCADE);
+    ball.anchor.setTo(0.5, 0.5);
+    ball.body.collideWorldBounds = true;
+    ball.body.bounce.setTo(0.9, 0.9);
+
+    // Enable input.
+    ball.body.allowGravity = false;
+    ball.inputEnabled = true;
+    ball.input.start(0, true);
+    ball.events.onInputDown.add(set);
+    ball.events.onInputUp.add(launch);
+
+    ball.body.onWorldBounds = new Phaser.Signal();
+    ball.body.onWorldBounds.add(replaceBall, this);
 }
