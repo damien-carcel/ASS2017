@@ -21,6 +21,7 @@ function preload() {
     game.load.image('analog', 'assets/sprites/fusia.png');
     game.load.image('arrow', 'assets/sprites/longarrow2.png');
     game.load.image('ball', 'assets/sprites/pangball.png');
+    game.load.spritesheet('kaboom', 'assets/spritesheet/explode.png', 128, 128);
 }
 
 var arrow;
@@ -141,17 +142,22 @@ function render() {
 
 function replaceBall() {
     ball.destroy();
+
     createBall();
 }
 
 function createBall() {
     ball = game.add.sprite(205, 360, 'ball');
+
+    setupBall();
+}
+
+function setupBall() {
     game.physics.enable(ball, Phaser.Physics.ARCADE);
     ball.anchor.setTo(0.5, 0.5);
     ball.body.collideWorldBounds = true;
     ball.body.bounce.setTo(0.9, 0.9);
 
-    // Enable input.
     ball.body.allowGravity = false;
     ball.inputEnabled = true;
     ball.input.start(0, true);
@@ -159,5 +165,5 @@ function createBall() {
     ball.events.onInputUp.add(launch);
 
     ball.body.onWorldBounds = new Phaser.Signal();
-    ball.body.onWorldBounds.add(replaceBall, this);
+    ball.body.onWorldBounds.add(replaceBall);
 }
