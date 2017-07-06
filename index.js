@@ -10,6 +10,8 @@ var arrow;
 var ball;
 var physicGround;
 var constructionElements;
+var explosions;
+var explosion;
 var catchFlag = false;
 var isLaunched = false;
 var launchVelocity = 0;
@@ -79,6 +81,8 @@ function create() {
     /* Define the game physics */
     /***************************/
 
+    explosions = game.add.group();
+
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     // set global gravity
@@ -133,8 +137,9 @@ function set(ball) {
 function update() {
     game.physics.arcade.collide(ball, physicGround);
     game.physics.arcade.collide(constructionElements);
-    game.physics.arcade.collide(ball, constructionElements);
     game.physics.arcade.collide(physicGround, constructionElements);
+    game.physics.arcade.collide(ball, constructionElements, collisionHandler, null, this);
+
     arrow.rotation = game.physics.arcade.angleBetween(arrow, ball);
 
     if (true === catchFlag) {
@@ -159,11 +164,7 @@ function update() {
 }
 
 function render() {
-    game.debug.text("Drag the ball and release to launch", 32, 32);
-    game.debug.bodyInfo(ball, 32, 64);
-    game.debug.text('catchFlag: ' + catchFlag, 800, 32);
-    game.debug.text('isLaunched: ' + isLaunched, 800, 64);
-    game.debug.text('Time: ' + time, 800, 96);
+    game.debug.bodyInfo(ball, 32, 32);
 }
 
 function replaceBall() {
@@ -210,6 +211,17 @@ function launch() {
     ball.body.velocity.setTo(Xvector, Yvector);
 }
 
+var collisionHandler = function (ball, element) {
+    explosion = explosions.getFirstExists(false);
+    if (explosion) {
+        explosion.reset(element.body.x, element.body.y);
+        element.destroy();
+        explosion.play('kaboom', 50, false, true);
+    }
+
+//    HUD.updateScoreText(person.myScore);
+}
+
 var createSilos = {
     'level1': function () {
         var silo1 = constructionElements.create(800, 280, 'silo');
@@ -233,5 +245,13 @@ var createSilos = {
         block1.body.drag.x = 1000;
         block2.body.collideWorldBounds = true;
         block2.body.drag.x = 1000;
+
+        explosions.createMultiple(8, 'kaboom');
+        explosions.forEach(
+            function (element) {
+                element.animations.add('kaboom');
+            },
+            [silo1, silo2, silo3, silo4, block1, block2]
+        );
     }
 };
