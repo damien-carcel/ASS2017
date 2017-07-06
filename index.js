@@ -83,7 +83,7 @@ function create() {
     arrow.body.allowGravity = false;
     arrow.alpha = 0;
 
-    physicGround = game.add.tileSprite(450, 450, 750, 40, 'ground');
+    physicGround = game.add.tileSprite(450, 500, 750, 40, 'ground');
     game.physics.enable(physicGround, Phaser.Physics.ARCADE);
     physicGround.body.collideWorldBounds = true;
     physicGround.body.immovable = true;
@@ -223,7 +223,7 @@ var createSilos = {
     'level1': function () {
         constructionElements.level1 = game.add.group();
 
-        var silo1 = constructionElements.level1.create(850, 350, 'silo');
+        var silo1 = constructionElements.level1.create(850, 400, 'silo');
         var block1 = constructionElements.level1.create(0, 0, 'block').alignTo(silo1, Phaser.TOP_LEFT, 0);
         var silo2 = constructionElements.level1.create(0, 0, 'silo').alignTo(block1, Phaser.BOTTOM_RIGHT, 0);
         var silo3 = constructionElements.level1.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_LEFT, 0);
@@ -257,7 +257,7 @@ var createSilos = {
     'level2': function () {
         constructionElements.level2 = game.add.group();
 
-        var silo1 = constructionElements.level2.create(850, 350, 'silo');
+        var silo1 = constructionElements.level2.create(850, 400, 'silo');
         var block1 = constructionElements.level2.create(0, 0, 'block').alignTo(silo1, Phaser.TOP_LEFT, 0);
         var silo2 = constructionElements.level2.create(0, 0, 'silo').alignTo(block1, Phaser.BOTTOM_RIGHT, 0);
         var silo3 = constructionElements.level2.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_LEFT, 0);
