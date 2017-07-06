@@ -6,6 +6,7 @@ var game = new Phaser.Game(
     { preload: preload, create: create, update: update, render: render }
 );
 
+var analog;
 var arrow;
 var ball;
 var physicGround;
@@ -14,7 +15,6 @@ var explosion;
 var shoots;
 var catchFlag = false;
 var isLaunched = false;
-var launchVelocity = 0;
 var level = 0;
 var time = 0;
 var score = 0;
@@ -22,6 +22,9 @@ var constructionElements = {};
 
 function preload() {
     game.world.setBounds(0, 0, 1200, 600);
+
+    // Splash screen
+    game.load.image('splash', 'assets/sprites/bigsky-2x.png');
 
     // Define the appearance of the world
     game.load.image('ground', 'assets/sprites/ground-2x.png');
@@ -50,35 +53,20 @@ function create() {
     /* Define the world appearance */
     /*******************************/
 
-    // Create the sky layer, behind everything and donot move.
     var skyLayer = game.add.group();
-
-    // Create the cloud layer, only beyond the sky.
     var cloudLayer = game.add.group();
-
-    // Create the ground, behind the river and beyond clouds.
     var groundLayer = game.add.group();
-
-    // Create the sprite layer. This should behind the river,
-    // and beyond the ground, cloud and sky layer.
-    var spriteLayer = game.add.group();
-
-    // Create the river layer, beyond everything.
     var riverLayer = game.add.group();
 
-    // Add sky background to skyLayer.
-    var sky = skyLayer.create(0, 0, 'sky');
+    skyLayer.create(0, 0, 'sky');
 
-    // Add clouds to cloudLayer.
-    var cloud0 = cloudLayer.create(200, 120, 'cloud0');
-    var cloud1 = cloudLayer.create(-60, 120, 'cloud1');
-    var cloud2 = cloudLayer.create(900, 170, 'cloud2');
+    cloudLayer.create(200, 120, 'cloud0');
+    cloudLayer.create(-60, 120, 'cloud1');
+    cloudLayer.create(900, 170, 'cloud2');
 
-    // Add ground sprite to groundLayer.
-    var ground = groundLayer.create(0, 360, 'ground');
+    groundLayer.create(0, 360, 'ground');
 
-    // Add river to riverLayer.
-    var river = riverLayer.create(0, 400, 'river');
+    riverLayer.create(0, 400, 'river');
 
     /***************************/
     /* Define the game physics */
@@ -88,7 +76,6 @@ function create() {
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    // set global gravity
     game.physics.arcade.gravity.y = 1500;
 
     // Set Ziggy
@@ -128,13 +115,6 @@ function create() {
     createSilos['level' + level]();
 }
 
-function set(ball) {
-    ball.body.moves = false;
-    ball.body.velocity.setTo(0, 0);
-    ball.body.allowGravity = false;
-    catchFlag = true;
-}
-
 function update() {
     game.physics.arcade.collide(ball, physicGround);
     game.physics.arcade.collide(constructionElements['level' + level]);
@@ -152,7 +132,6 @@ function update() {
         analog.alpha = 0.5;
         analog.rotation = arrow.rotation - 3.14 / 2;
         analog.height = game.physics.arcade.distanceToPointer(arrow);
-        launchVelocity = analog.height;
     }
 
     if (true === isLaunched && false === catchFlag) {
@@ -168,6 +147,13 @@ function render() {
     game.debug.text('Level: ' + level, 32, 32);
     game.debug.text('Shoots: ' + shoots, 32, 64);
     game.debug.text('Score: ' + score, 32, 96);
+}
+
+function set(ball) {
+    ball.body.moves = false;
+    ball.body.velocity.setTo(0, 0);
+    ball.body.allowGravity = false;
+    catchFlag = true;
 }
 
 function replaceBall() {
@@ -217,8 +203,8 @@ function launch() {
     ball.body.moves = true;
     arrow.alpha = 0;
     analog.alpha = 0;
-    Xvector = (arrow.x - ball.x) * 6;
-    Yvector = (arrow.y - ball.y) * 6;
+    var Xvector = (arrow.x - ball.x) * 6;
+    var Yvector = (arrow.y - ball.y) * 6;
     ball.body.allowGravity = true;
     ball.body.velocity.setTo(Xvector, Yvector);
 }
