@@ -229,11 +229,11 @@ var collisionHandler = function (ball, element) {
         element.destroy();
         explosion.play('kaboom', 50, false, true);
 
-        if ('silo' === element.type) {
+        if ('silo' === element.key) {
             score += 10;
         }
 
-        if ('block' === element.type) {
+        if ('block' === element.key) {
             score += 5;
         }
     }
@@ -255,22 +255,16 @@ var createSilos = {
 
         silo1.body.collideWorldBounds = true;
         silo1.body.drag.x = 1000;
-        silo1.type = 'silo';
         silo2.body.collideWorldBounds = true;
         silo2.body.drag.x = 1000;
-        silo2.type = 'silo';
         silo3.body.collideWorldBounds = true;
         silo3.body.drag.x = 1000;
-        silo3.type = 'silo';
         silo4.body.collideWorldBounds = true;
         silo4.body.drag.x = 1000;
-        silo4.type = 'silo';
         block1.body.collideWorldBounds = true;
         block1.body.drag.x = 1000;
-        block1.type = 'block';
         block2.body.collideWorldBounds = true;
         block2.body.drag.x = 1000;
-        block2.type = 'block';
 
         explosions.createMultiple(8, 'kaboom');
         explosions.forEach(
@@ -296,25 +290,18 @@ var createSilos = {
 
         silo1.body.collideWorldBounds = true;
         silo1.body.drag.x = 1000;
-        silo1.type = 'silo';
         silo2.body.collideWorldBounds = true;
         silo2.body.drag.x = 1000;
-        silo2.type = 'silo';
         silo3.body.collideWorldBounds = true;
         silo3.body.drag.x = 1000;
-        silo3.type = 'silo';
         silo4.body.collideWorldBounds = true;
         silo4.body.drag.x = 1000;
-        silo4.type = 'silo';
         silo5.body.collideWorldBounds = true;
         silo5.body.drag.x = 1000;
-        silo5.type = 'silo';
         block1.body.collideWorldBounds = true;
         block1.body.drag.x = 1000;
-        block1.type = 'block';
         block2.body.collideWorldBounds = true;
         block2.body.drag.x = 1000;
-        block2.type = 'block';
 
         explosions.createMultiple(8, 'kaboom');
         explosions.forEach(
