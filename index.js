@@ -24,19 +24,16 @@ function preload() {
     game.world.setBounds(0, 0, 1200, 600);
 
     // Splash screen
-    game.load.image('splash', 'assets/sprites/bigsky-2x.png');
+    game.load.image('splash', 'assets/sprites/splash.png');
 
     // Define the appearance of the world
-    game.load.image('ground', 'assets/sprites/ground-2x.png');
-    game.load.image('river', 'assets/sprites/river-2x.png');
-    game.load.image('sky', 'assets/sprites/sky-2x.png');
-    game.load.image('cloud0', 'assets/sprites/cloud-big-2x.png');
-    game.load.image('cloud1', 'assets/sprites/cloud-narrow-2x.png');
-    game.load.image('cloud2', 'assets/sprites/cloud-small-2x.png');
+    game.load.image('backgroud', 'assets/backgrounds/Angry_Ziggy_Background.jpg');
+    game.load.image('cliffs', 'assets/sprites/cliffs.png');
+    game.load.image('ground', 'assets/sprites/ground.png');
 
     // Define the interactive part
     game.load.image('analog', 'assets/sprites/fusia.png');
-    game.load.image('arrow', 'assets/sprites/longarrow2.png');
+    game.load.image('arrow', 'assets/sprites/arrow.png');
     game.load.image('ball', 'assets/sprites/pangball.png');
     game.load.spritesheet('kaboom', 'assets/spritesheet/explode.png', 128, 128);
 
@@ -53,20 +50,11 @@ function create() {
     /* Define the world appearance */
     /*******************************/
 
-    var skyLayer = game.add.group();
-    var cloudLayer = game.add.group();
-    var groundLayer = game.add.group();
-    var riverLayer = game.add.group();
+    var backgroundLayer = game.add.group();
+    var cliffsLayer = game.add.group();
 
-    skyLayer.create(0, 0, 'sky');
-
-    cloudLayer.create(200, 120, 'cloud0');
-    cloudLayer.create(-60, 120, 'cloud1');
-    cloudLayer.create(900, 170, 'cloud2');
-
-    groundLayer.create(0, 360, 'ground');
-
-    riverLayer.create(0, 400, 'river');
+    backgroundLayer.create(0, 0, 'backgroud');
+    cliffsLayer.create(0, 0, 'cliffs');
 
     /***************************/
     /* Define the game physics */
@@ -78,12 +66,7 @@ function create() {
 
     game.physics.arcade.gravity.y = 1500;
 
-    // Set Ziggy
-    var graphics = game.add.graphics(0, 0);
-    graphics.beginFill(0x049e0c);
-    graphics.drawRect(200, 350, 10, 50);
-
-    analog = game.add.sprite(200, 350, 'analog');
+    analog = game.add.sprite(275, 365, 'analog');
 
     game.physics.enable(analog, Phaser.Physics.ARCADE);
 
@@ -93,7 +76,7 @@ function create() {
     analog.alpha = 0;
     analog.anchor.setTo(0.5, 0.0);
 
-    arrow = game.add.sprite(200, 350, 'arrow');
+    arrow = game.add.sprite(275, 365, 'arrow');
 
     game.physics.enable(arrow, Phaser.Physics.ARCADE);
 
@@ -102,7 +85,7 @@ function create() {
     arrow.body.allowGravity = false;
     arrow.alpha = 0;
 
-    physicGround = game.add.tileSprite(300, 380, 900, 40, 'ground');
+    physicGround = game.add.tileSprite(450, 450, 750, 40, 'ground');
     physicGround.visible = false;
 
     game.physics.enable(physicGround, Phaser.Physics.ARCADE);
@@ -174,7 +157,7 @@ function replaceBall() {
 function createBall() {
     isLaunched = false;
     time = 0;
-    ball = game.add.sprite(205, 360, 'ball');
+    ball = game.add.sprite(280, 375, 'ball');
 
     setupBall();
 }
@@ -244,7 +227,7 @@ var createSilos = {
     'level1': function () {
         constructionElements.level1 = game.add.group();
 
-        var silo1 = constructionElements.level1.create(800, 280, 'silo');
+        var silo1 = constructionElements.level1.create(850, 350, 'silo');
         var block1 = constructionElements.level1.create(0, 0, 'block').alignTo(silo1, Phaser.TOP_LEFT, 0);
         var silo2 = constructionElements.level1.create(0, 0, 'silo').alignTo(block1, Phaser.BOTTOM_RIGHT, 0);
         var silo3 = constructionElements.level1.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_LEFT, 0);
@@ -278,7 +261,7 @@ var createSilos = {
     'level2': function () {
         constructionElements.level2 = game.add.group();
 
-        var silo1 = constructionElements.level2.create(800, 280, 'silo');
+        var silo1 = constructionElements.level2.create(850, 350, 'silo');
         var block1 = constructionElements.level2.create(0, 0, 'block').alignTo(silo1, Phaser.TOP_LEFT, 0);
         var silo2 = constructionElements.level2.create(0, 0, 'silo').alignTo(block1, Phaser.BOTTOM_RIGHT, 0);
         var silo3 = constructionElements.level2.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_LEFT, 0);
