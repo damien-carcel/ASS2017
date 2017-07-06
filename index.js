@@ -222,10 +222,16 @@ var createSilos = {
         game.physics.arcade.enable([silo1, silo2, silo3, silo4, block1, block2]);
 
         silo1.body.collideWorldBounds = true;
+        silo1.body.drag.x = 1000;
         silo2.body.collideWorldBounds = true;
+        silo2.body.drag.x = 1000;
         silo3.body.collideWorldBounds = true;
+        silo3.body.drag.x = 1000;
         silo4.body.collideWorldBounds = true;
+        silo4.body.drag.x = 1000;
         block1.body.collideWorldBounds = true;
+        block1.body.drag.x = 1000;
         block2.body.collideWorldBounds = true;
+        block2.body.drag.x = 1000;
     }
 };
