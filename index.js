@@ -9,6 +9,7 @@ var game = new Phaser.Game(
 var arrow;
 var ball;
 var physicGround;
+var constructionElements;
 var catchFlag = false;
 var launchVelocity = 0;
 var level = 0;
@@ -105,7 +106,8 @@ function create() {
     arrow.body.allowGravity = false;
     arrow.alpha = 0;
 
-    physicGround = game.add.tileSprite(300, 360, 900, 40, 'ground');
+    physicGround = game.add.tileSprite(300, 380, 900, 40, 'ground');
+    physicGround.visible = false;
 
     game.physics.enable(physicGround, Phaser.Physics.ARCADE);
 
@@ -114,6 +116,8 @@ function create() {
     physicGround.body.allowGravity = false;
 
     createBall();
+
+    constructionElements = game.add.group();
     createSilos['level' + level]();
 }
 
@@ -138,6 +142,9 @@ function launch() {
 
 function update() {
     game.physics.arcade.collide(ball, physicGround);
+    game.physics.arcade.collide(constructionElements);
+    game.physics.arcade.collide(ball, constructionElements);
+    game.physics.arcade.collide(physicGround, constructionElements);
     arrow.rotation = game.physics.arcade.angleBetween(arrow, ball);
 
     if (catchFlag === true) {
@@ -189,25 +196,20 @@ function setupBall() {
 
 var createSilos = {
     'level1': function () {
-        var silo1 = game.add.sprite(800, 300, 'silo');
-        var block1 = game.add.sprite(0, 0, 'block').alignTo(silo1, Phaser.TOP_LEFT, 2);
-        var silo2 = game.add.sprite(0, 0, 'silo').alignTo(block1, Phaser.BOTTOM_RIGHT, 2);
-        var silo3 = game.add.sprite(0, 0, 'silo').alignTo(block1, Phaser.TOP_LEFT, 2);
-        var block2 = game.add.sprite(0, 0, 'block').alignTo(silo3, Phaser.TOP_LEFT, 2);
-        var silo4 = game.add.sprite(0, 0, 'silo').alignTo(block2, Phaser.BOTTOM_RIGHT, 2);
+        var silo1 = constructionElements.create(800, 280, 'silo');
+        var block1 = constructionElements.create(0, 0, 'block').alignTo(silo1, Phaser.TOP_LEFT, 0);
+        var silo2 = constructionElements.create(0, 0, 'silo').alignTo(block1, Phaser.BOTTOM_RIGHT, 0);
+        var silo3 = constructionElements.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_LEFT, 0);
+        var block2 = constructionElements.create(0, 0, 'block').alignTo(silo3, Phaser.TOP_LEFT, 0);
+        var silo4 = constructionElements.create(0, 0, 'silo').alignTo(block2, Phaser.BOTTOM_RIGHT, 0);
 
         game.physics.arcade.enable([silo1, silo2, silo3, silo4, block1, block2]);
 
         silo1.body.collideWorldBounds = true;
-
         silo2.body.collideWorldBounds = true;
-
         silo3.body.collideWorldBounds = true;
-
         silo4.body.collideWorldBounds = true;
-
         block1.body.collideWorldBounds = true;
-
         block2.body.collideWorldBounds = true;
     }
 };
