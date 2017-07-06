@@ -11,8 +11,10 @@ var ball;
 var physicGround;
 var constructionElements;
 var catchFlag = false;
+var isLaunched = false;
 var launchVelocity = 0;
 var level = 0;
+var time = 0;
 
 function preload() {
     game.world.setBounds(0, 0, 1200, 600);
@@ -37,7 +39,7 @@ function preload() {
 }
 
 function create() {
-    level += 1;
+    level++;
 
     /*******************************/
     /* Define the world appearance */
@@ -128,18 +130,6 @@ function set(ball) {
     catchFlag = true;
 }
 
-function launch() {
-    catchFlag = false;
-
-    ball.body.moves = true;
-    arrow.alpha = 0;
-    analog.alpha = 0;
-    Xvector = (arrow.x - ball.x) * 6;
-    Yvector = (arrow.y - ball.y) * 6;
-    ball.body.allowGravity = true;
-    ball.body.velocity.setTo(Xvector, Yvector);
-}
-
 function update() {
     game.physics.arcade.collide(ball, physicGround);
     game.physics.arcade.collide(constructionElements);
@@ -147,7 +137,7 @@ function update() {
     game.physics.arcade.collide(physicGround, constructionElements);
     arrow.rotation = game.physics.arcade.angleBetween(arrow, ball);
 
-    if (catchFlag === true) {
+    if (true === catchFlag) {
         //  Track the ball sprite to the mouse
         ball.x = game.input.activePointer.worldX;
         ball.y = game.input.activePointer.worldY;
@@ -158,11 +148,22 @@ function update() {
         analog.height = game.physics.arcade.distanceToPointer(arrow);
         launchVelocity = analog.height;
     }
+
+    if (true === isLaunched && false === catchFlag) {
+        time++;
+    }
+
+    if (200 < time) {
+        replaceBall();
+    }
 }
 
 function render() {
     game.debug.text("Drag the ball and release to launch", 32, 32);
     game.debug.bodyInfo(ball, 32, 64);
+    game.debug.text('catchFlag: ' + catchFlag, 800, 32);
+    game.debug.text('isLaunched: ' + isLaunched, 800, 64);
+    game.debug.text('Time: ' + time, 800, 96);
 }
 
 function replaceBall() {
@@ -172,6 +173,8 @@ function replaceBall() {
 }
 
 function createBall() {
+    isLaunched = false;
+    time = 0;
     ball = game.add.sprite(205, 360, 'ball');
 
     setupBall();
@@ -194,14 +197,27 @@ function setupBall() {
     ball.body.onWorldBounds.add(replaceBall);
 }
 
+function launch() {
+    catchFlag = false;
+    isLaunched = true;
+
+    ball.body.moves = true;
+    arrow.alpha = 0;
+    analog.alpha = 0;
+    Xvector = (arrow.x - ball.x) * 6;
+    Yvector = (arrow.y - ball.y) * 6;
+    ball.body.allowGravity = true;
+    ball.body.velocity.setTo(Xvector, Yvector);
+}
+
 var createSilos = {
     'level1': function () {
         var silo1 = constructionElements.create(800, 280, 'silo');
         var block1 = constructionElements.create(0, 0, 'block').alignTo(silo1, Phaser.TOP_LEFT, 0);
         var silo2 = constructionElements.create(0, 0, 'silo').alignTo(block1, Phaser.BOTTOM_RIGHT, 0);
         var silo3 = constructionElements.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_LEFT, 0);
+        var silo4 = constructionElements.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_RIGHT, 0);
         var block2 = constructionElements.create(0, 0, 'block').alignTo(silo3, Phaser.TOP_LEFT, 0);
-        var silo4 = constructionElements.create(0, 0, 'silo').alignTo(block2, Phaser.BOTTOM_RIGHT, 0);
 
         game.physics.arcade.enable([silo1, silo2, silo3, silo4, block1, block2]);
 
