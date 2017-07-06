@@ -29,9 +29,10 @@ function preload() {
     // Define the appearance of the world
     game.load.image('backgroud', 'assets/backgrounds/Angry_Ziggy_Background.jpg');
     game.load.image('cliffs', 'assets/sprites/cliffs.png');
-    game.load.image('ground', 'assets/sprites/ground.png');
+    game.load.image('ziggy', 'assets/sprites/ziggy.png');
 
     // Define the interactive part
+    game.load.image('ground', 'assets/sprites/ground.png');
     game.load.image('analog', 'assets/sprites/fusia.png');
     game.load.image('arrow', 'assets/sprites/arrow.png');
     game.load.image('ball', 'assets/sprites/pangball.png');
@@ -52,9 +53,11 @@ function create() {
 
     var backgroundLayer = game.add.group();
     var cliffsLayer = game.add.group();
+    var ziggyLayer = game.add.group();
 
     backgroundLayer.create(0, 0, 'backgroud');
     cliffsLayer.create(0, 0, 'cliffs');
+    ziggyLayer.create(40, 330, 'ziggy');
 
     /***************************/
     /* Define the game physics */
@@ -63,13 +66,10 @@ function create() {
     explosions = game.add.group();
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
     game.physics.arcade.gravity.y = 1500;
 
     analog = game.add.sprite(275, 365, 'analog');
-
     game.physics.enable(analog, Phaser.Physics.ARCADE);
-
     analog.body.allowGravity = false;
     analog.width = 8;
     analog.rotation = 220;
@@ -77,22 +77,18 @@ function create() {
     analog.anchor.setTo(0.5, 0.0);
 
     arrow = game.add.sprite(275, 365, 'arrow');
-
     game.physics.enable(arrow, Phaser.Physics.ARCADE);
-
     arrow.anchor.setTo(0.1, 0.5);
     arrow.body.moves = false;
     arrow.body.allowGravity = false;
     arrow.alpha = 0;
 
     physicGround = game.add.tileSprite(450, 450, 750, 40, 'ground');
-    physicGround.visible = false;
-
     game.physics.enable(physicGround, Phaser.Physics.ARCADE);
-
     physicGround.body.collideWorldBounds = true;
     physicGround.body.immovable = true;
     physicGround.body.allowGravity = false;
+    physicGround.visible = false;
 
     createBall();
     createSilos['level' + level]();
