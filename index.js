@@ -176,7 +176,8 @@ function replaceBall() {
 
     createBall();
 
-    if (shoots <= 0 && level <= 2) {
+    if (shoots <= 0 || hasLevelNoSilosLeft()) {
+        score += shoots * 10;
         level++;
         shoots = 3;
 
@@ -222,6 +223,20 @@ function launch() {
     ball.body.velocity.setTo(Xvector, Yvector);
 }
 
+function hasLevelNoSilosLeft() {
+    if (0 === constructionElements['level' + level].children.length) {
+        return true;
+    }
+
+    for (var child in constructionElements['level' + level].children) {
+        if ('silo' === constructionElements['level' + level].children[child].key) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 var collisionHandler = function (ball, element) {
     explosion = explosions.getFirstExists(false);
     if (explosion) {
@@ -230,7 +245,7 @@ var collisionHandler = function (ball, element) {
         explosion.play('kaboom', 50, false, true);
 
         if ('silo' === element.key) {
-            score += 10;
+            score += 20;
         }
 
         if ('block' === element.key) {
