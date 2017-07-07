@@ -310,6 +310,7 @@ var createSilos = {
         var silo1 = constructionElements.level1.create(850, 400, 'silo');
         var block1 = constructionElements.level1.create(0, 0, 'block').alignTo(silo1, Phaser.TOP_LEFT, 0);
         var silo2 = constructionElements.level1.create(0, 0, 'silo').alignTo(block1, Phaser.BOTTOM_RIGHT, 0);
+
         var silo3 = constructionElements.level1.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_LEFT, 0);
         var silo4 = constructionElements.level1.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_RIGHT, 0);
         var block2 = constructionElements.level1.create(0, 0, 'block').alignTo(silo3, Phaser.TOP_LEFT, 0);
@@ -342,17 +343,23 @@ var createSilos = {
         francois.destroy();
         tobi.destroy();
 
+        characters.level2 = game.add.group();
         constructionElements.level2 = game.add.group();
+
+        nico = characters.level2.create(850, 450, 'Nico');
+        renee = characters.level2.create(992, 450, 'Renee');
 
         var silo1 = constructionElements.level2.create(850, 400, 'silo');
         var block1 = constructionElements.level2.create(0, 0, 'block').alignTo(silo1, Phaser.TOP_LEFT, 0);
         var silo2 = constructionElements.level2.create(0, 0, 'silo').alignTo(block1, Phaser.BOTTOM_RIGHT, 0);
-        var silo3 = constructionElements.level2.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_LEFT, 0);
-        var silo4 = constructionElements.level2.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_RIGHT, 0);
-        var block2 = constructionElements.level2.create(0, 0, 'block').alignTo(silo3, Phaser.TOP_LEFT, 0);
+        var block2 = constructionElements.level2.create(0, 0, 'block').alignTo(silo2, Phaser.TOP_LEFT, 0);
+        var silo3 = constructionElements.level2.create(0, 0, 'silo').alignTo(block2, Phaser.BOTTOM_RIGHT, 0);
+
+        var silo4 = constructionElements.level2.create(0, 0, 'silo').alignTo(block1, Phaser.TOP_CENTER, 0);
+        var block3 = constructionElements.level2.create(0, 0, 'block').alignTo(silo4, Phaser.TOP_LEFT, 0);
         var silo5 = constructionElements.level2.create(0, 0, 'silo').alignTo(block2, Phaser.TOP_CENTER, 0);
 
-        var constructions = [silo1, silo2, silo3, silo4, silo5, block1, block2];
+        var constructions = [silo1, silo2, silo3, silo4, silo5, block1, block2, block3];
         game.physics.arcade.enable(constructions);
 
         silo1.body.collideWorldBounds = true;
@@ -369,6 +376,8 @@ var createSilos = {
         block1.body.drag.x = 1000;
         block2.body.collideWorldBounds = true;
         block2.body.drag.x = 1000;
+        block3.body.collideWorldBounds = true;
+        block3.body.drag.x = 1000;
 
         explosions.createMultiple(8, 'kaboom');
         explosions.forEach(
