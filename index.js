@@ -208,7 +208,6 @@ function update() {
 }
 
 function render() {
-    game.debug.text('Laugh: ' + laughNumber, 10, 10);
 }
 
 function set(ball) {
