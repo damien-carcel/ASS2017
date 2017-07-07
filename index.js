@@ -29,6 +29,7 @@ var tobi;
 
 var catchFlag = false;
 var isLaunched = false;
+var laughNumber = 0;
 
 var level = 0;
 var score = 0;
@@ -72,7 +73,7 @@ function preload() {
     game.load.audio('backgroundmusic', 'assets/audio/background.mp3');
     game.load.audio('magicaleffects', 'assets/audio/magical_horror_audiosprite.mp3');
     game.load.audio('boingeffect', 'assets/audio/boing.wav');
-    game.load.audio('laugheffect', 'assets/audi/laugh.mp3');
+    game.load.audio('laugheffect', 'assets/audio/laugh.mp3');
 }
 
 function create() {
@@ -118,8 +119,11 @@ function create() {
     boing.addMarker('boing', 8, 5.2);
 
     laugh = game.add.audio('laugheffect');
-    laugh.allowMultiple = false;
-    laugh.addMarker('laugh', 8, 5.2);
+    laugh.allowMultiple = true;
+    laugh.addMarker('laugh1', 0, 2.0);
+    laugh.addMarker('laugh2', 3.2, 2.0);
+    laugh.addMarker('laugh3', 27.4, 2.0);
+    laugh.addMarker('laugh4', 6.4, 7.0);
 
     /***************************/
     /* Define the game physics */
@@ -204,6 +208,7 @@ function update() {
 }
 
 function render() {
+    game.debug.text('Laugh: ' + laughNumber, 10, 10);
 }
 
 function set(ball) {
@@ -286,11 +291,17 @@ var collisionHandler = function (ball, element) {
         explosion.reset(element.body.x, element.body.y);
         element.destroy();
         explosion.play('kaboom', 50, false, true);
-        effects.resume();
         effects.play('fireball');
 
         if ('silo' === element.key) {
             score += 20;
+
+            if (true === element.charater) {
+                laughNumber++;
+
+                effects.play('fireball');
+                laugh.play('laugh' + laughNumber);
+            }
         }
 
         if ('block' === element.key) {
@@ -320,12 +331,16 @@ var createSilos = {
 
         silo1.body.collideWorldBounds = true;
         silo1.body.drag.x = 1000;
+        silo1.charater = true;
         silo2.body.collideWorldBounds = true;
         silo2.body.drag.x = 1000;
+        silo2.charater = true;
         silo3.body.collideWorldBounds = true;
         silo3.body.drag.x = 1000;
+        silo3.charater = false;
         silo4.body.collideWorldBounds = true;
         silo4.body.drag.x = 1000;
+        silo4.charater = false;
         block1.body.collideWorldBounds = true;
         block1.body.drag.x = 1000;
         block2.body.collideWorldBounds = true;
@@ -364,14 +379,19 @@ var createSilos = {
 
         silo1.body.collideWorldBounds = true;
         silo1.body.drag.x = 1000;
+        silo1.charater = true;
         silo2.body.collideWorldBounds = true;
         silo2.body.drag.x = 1000;
+        silo2.charater = false;
         silo3.body.collideWorldBounds = true;
         silo3.body.drag.x = 1000;
+        silo3.charater = true;
         silo4.body.collideWorldBounds = true;
         silo4.body.drag.x = 1000;
+        silo4.charater = false;
         silo5.body.collideWorldBounds = true;
         silo5.body.drag.x = 1000;
+        silo5.charater = false;
         block1.body.collideWorldBounds = true;
         block1.body.drag.x = 1000;
         block2.body.collideWorldBounds = true;
