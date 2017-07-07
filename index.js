@@ -93,12 +93,12 @@ function create() {
     ziggyLayer.create(40, 330, 'ziggy');
     eggsLayer.create(20, 480, 'eggs');
 
-    levelText = game.add.bitmapText(50, 50, 'angryfont', 'Level: ' + level, 48);
-    shootingsText = game.add.bitmapText(250, 60, 'angryfont', 'Shoots left: ' + shoots, 24);
-    scoreText = game.add.bitmapText(50, 100, 'angryfont', 'Score: ' + score, 36);
+    levelText = game.add.bitmapText(50, 30, 'angryfont', 'level: ' + level, 48);
+    shootingsText = game.add.bitmapText(250, 50, 'angryfont', 'shoots left: ' + shoots, 24);
+    scoreText = game.add.bitmapText(50, 120, 'angryfont', 'score: ' + score, 36);
 
     akeneLayer = game.add.group();
-    akene = akeneLayer.create(180, 95, 'akene');
+    akene = akeneLayer.create(180, 120, 'akene');
 
     /*********************/
     /* Define the sounds */
@@ -163,17 +163,17 @@ function update() {
 
     if (1 <= score / 10 && 10 > score / 100) {
         akene.destroy();
-        akene = akeneLayer.create(195, 95, 'akene');
+        akene = akeneLayer.create(195, 120, 'akene');
     }
 
     if (1 <= score / 100 && 10 > score / 1000) {
         akene.destroy();
-        akene = akeneLayer.create(215, 95, 'akene');
+        akene = akeneLayer.create(215, 120, 'akene');
     }
 
     if (1 <= score / 1000) {
         akene.destroy();
-        akene = akeneLayer.create(235, 95, 'akene');
+        akene = akeneLayer.create(235, 120, 'akene');
     }
 
     game.physics.arcade.collide(ball, physicGround);
