@@ -6,18 +6,26 @@ var game = new Phaser.Game(
     { preload: preload, create: create, update: update, render: render }
 );
 
+var akene;
+var akeneLayer;
 var analog;
 var arrow;
 var ball;
-var physicGround;
-var explosions;
 var explosion;
+var explosions;
+var levelText;
+var physicGround;
+var scoreText;
 var shoots;
+var shootingsText;
+
 var catchFlag = false;
 var isLaunched = false;
+
 var level = 0;
-var time = 0;
 var score = 0;
+var time = 0;
+
 var constructionElements = {};
 
 function preload() {
@@ -41,6 +49,10 @@ function preload() {
     // Define the construct pieces
     game.load.image('block', 'assets/sprites/block.png');
     game.load.image('silo', 'assets/sprites/silo.png');
+
+    // Fonts
+    game.load.bitmapFont('angryfont', 'assets/fonts/angryfont.png', 'assets/fonts/angryfont.fnt');
+    game.load.image('akene', 'assets/sprites/akene.png')
 }
 
 function create() {
@@ -58,6 +70,13 @@ function create() {
     backgroundLayer.create(0, 0, 'backgroud');
     cliffsLayer.create(0, 0, 'cliffs');
     ziggyLayer.create(40, 330, 'ziggy');
+
+    levelText = game.add.bitmapText(50, 50, 'angryfont', 'Level: ' + level, 48);
+    shootingsText = game.add.bitmapText(250, 60, 'angryfont', 'Shoots left: ' + shoots, 24);
+    scoreText = game.add.bitmapText(50, 100, 'angryfont', 'Score: ' + score, 36);
+
+    akeneLayer = game.add.group();
+    akene = akeneLayer.create(180, 95, 'akene');
 
     /***************************/
     /* Define the game physics */
@@ -95,6 +114,25 @@ function create() {
 }
 
 function update() {
+    levelText.text = 'Level: ' + level;
+    shootingsText.text = 'Shoots left: ' + shoots;
+    scoreText.text = 'Score: ' + score;
+
+    if (1 <= score / 10 && 10 > score / 100) {
+        akene.destroy();
+        akene = akeneLayer.create(195, 95, 'akene');
+    }
+
+    if (1 <= score / 100 && 10 > score / 1000) {
+        akene.destroy();
+        akene = akeneLayer.create(215, 95, 'akene');
+    }
+
+    if (1 <= score / 1000) {
+        akene.destroy();
+        akene = akeneLayer.create(235, 95, 'akene');
+    }
+
     game.physics.arcade.collide(ball, physicGround);
     game.physics.arcade.collide(constructionElements['level' + level]);
     game.physics.arcade.collide(physicGround, constructionElements['level' + level]);
@@ -123,9 +161,6 @@ function update() {
 }
 
 function render() {
-    game.debug.text('Level: ' + level, 32, 32);
-    game.debug.text('Shoots: ' + shoots, 32, 64);
-    game.debug.text('Score: ' + score, 32, 96);
 }
 
 function set(ball) {
