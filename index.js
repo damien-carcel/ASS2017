@@ -38,6 +38,7 @@ function preload() {
     game.load.image('backgroud', 'assets/backgrounds/Angry_Ziggy_Background.jpg');
     game.load.image('cliffs', 'assets/sprites/cliffs.png');
     game.load.image('ziggy', 'assets/sprites/ziggy.png');
+    game.load.image('eggs', 'assets/sprites/Angry_Ziggy_Eggs.png');
 
     // Define the interactive part
     game.load.image('ground', 'assets/sprites/ground.png');
@@ -66,10 +67,12 @@ function create() {
     var backgroundLayer = game.add.group();
     var cliffsLayer = game.add.group();
     var ziggyLayer = game.add.group();
+    var eggsLayer = game.add.group();
 
     backgroundLayer.create(0, 0, 'backgroud');
     cliffsLayer.create(0, 0, 'cliffs');
     ziggyLayer.create(40, 330, 'ziggy');
+    eggsLayer.create(20, 480, 'eggs');
 
     levelText = game.add.bitmapText(50, 50, 'angryfont', 'Level: ' + level, 48);
     shootingsText = game.add.bitmapText(250, 60, 'angryfont', 'Shoots left: ' + shoots, 24);
