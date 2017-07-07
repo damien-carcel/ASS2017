@@ -43,7 +43,7 @@ function preload() {
     game.load.image('ground', 'assets/sprites/ground.png');
     game.load.image('analog', 'assets/sprites/fusia.png');
     game.load.image('arrow', 'assets/sprites/arrow.png');
-    game.load.image('ball', 'assets/sprites/pangball.png');
+    game.load.image('ball', 'assets/sprites/Angry_Ziggy_Egg.png');
     game.load.spritesheet('kaboom', 'assets/spritesheet/explode.png', 128, 128);
 
     // Define the construct pieces
@@ -52,7 +52,7 @@ function preload() {
 
     // Fonts
     game.load.bitmapFont('angryfont', 'assets/fonts/angryfont.png', 'assets/fonts/angryfont.fnt');
-    game.load.image('akene', 'assets/sprites/akene.png')
+    game.load.image('akene', 'assets/sprites/akene.png');
 }
 
 function create() {
@@ -87,7 +87,7 @@ function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 1500;
 
-    analog = game.add.sprite(275, 365, 'analog');
+    analog = game.add.sprite(278, 365, 'analog');
     game.physics.enable(analog, Phaser.Physics.ARCADE);
     analog.body.allowGravity = false;
     analog.width = 8;
@@ -95,7 +95,7 @@ function create() {
     analog.alpha = 0;
     analog.anchor.setTo(0.5, 0.0);
 
-    arrow = game.add.sprite(275, 365, 'arrow');
+    arrow = game.add.sprite(278, 365, 'arrow');
     game.physics.enable(arrow, Phaser.Physics.ARCADE);
     arrow.anchor.setTo(0.1, 0.5);
     arrow.body.moves = false;
@@ -188,7 +188,7 @@ function replaceBall() {
 function createBall() {
     isLaunched = false;
     time = 0;
-    ball = game.add.sprite(280, 375, 'ball');
+    ball = game.add.sprite(276, 370, 'ball');
 
     setupBall();
 }
