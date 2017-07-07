@@ -11,13 +11,17 @@ var akeneLayer;
 var analog;
 var arrow;
 var ball;
+var boing;
 var explosion;
 var explosions;
+var laugh;
 var levelText;
+var music;
 var physicGround;
 var scoreText;
 var shoots;
 var shootingsText;
+var effects;
 
 var catchFlag = false;
 var isLaunched = false;
@@ -54,6 +58,12 @@ function preload() {
     // Fonts
     game.load.bitmapFont('angryfont', 'assets/fonts/angryfont.png', 'assets/fonts/angryfont.fnt');
     game.load.image('akene', 'assets/sprites/akene.png');
+
+    // Sounds
+    game.load.audio('backgroundmusic', 'assets/audio/background.mp3');
+    game.load.audio('effects', 'assets/audio/magical_horror_audiosprite.mp3');
+    game.load.audio('boingeffect', 'assets/audio/boing.wav');
+    game.load.audio('laugheffect', 'assets/audi/laugh.mp3');
 }
 
 function create() {
@@ -80,6 +90,27 @@ function create() {
 
     akeneLayer = game.add.group();
     akene = akeneLayer.create(180, 95, 'akene');
+
+    /*********************/
+    /* Define the sounds */
+    /*********************/
+
+    music = game.add.audio('backgroundmusic');
+    music.mute = false;
+    music.volume = 0.5;
+    music.play();
+
+    effects = game.add.audio('sounds');
+    effects.allowMultiple = false;
+    effects.addMarker('fireball', 8, 5.2);
+
+    boing = game.add.audio('boingeffect');
+    boing.allowMultiple = false;
+    boing.addMarker('boing', 8, 5.2);
+
+    laugh = game.add.audio('laugheffect');
+    laugh.allowMultiple = false;
+    laugh.addMarker('laugh', 8, 5.2);
 
     /***************************/
     /* Define the game physics */
