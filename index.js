@@ -12,16 +12,20 @@ var analog;
 var arrow;
 var ball;
 var boing;
+var effects;
 var explosion;
 var explosions;
+var francois;
 var laugh;
 var levelText;
 var music;
+var nico
 var physicGround;
+var renee;
 var scoreText;
 var shoots;
 var shootingsText;
-var effects;
+var tobi;
 
 var catchFlag = false;
 var isLaunched = false;
@@ -30,6 +34,7 @@ var level = 0;
 var score = 0;
 var time = 0;
 
+var characters = {};
 var constructionElements = {};
 
 function preload() {
@@ -44,12 +49,16 @@ function preload() {
     game.load.image('ziggy', 'assets/sprites/ziggy.png');
     game.load.image('eggs', 'assets/sprites/Angry_Ziggy_Eggs.png');
 
-    // Define the interactive part
+    // Define the "interactive" part
     game.load.image('ground', 'assets/sprites/ground.png');
     game.load.image('analog', 'assets/sprites/fusia.png');
     game.load.image('arrow', 'assets/sprites/arrow.png');
     game.load.image('ball', 'assets/sprites/Angry_Ziggy_Egg.png');
     game.load.spritesheet('kaboom', 'assets/spritesheet/explode.png', 128, 128);
+    game.load.image('Francois', 'assets/sprites/Francois.png');
+    game.load.image('Nico', 'assets/sprites/Nico.png');
+    game.load.image('Renee', 'assets/sprites/Renee.png');
+    game.load.image('Tobi', 'assets/sprites/Tobi.png');
 
     // Define the construct pieces
     game.load.image('block', 'assets/sprites/block.png');
@@ -292,7 +301,11 @@ var collisionHandler = function (ball, element) {
 
 var createSilos = {
     'level1': function () {
+        characters.level1 = game.add.group();
         constructionElements.level1 = game.add.group();
+
+        francois = characters.level1.create(850, 450, 'Francois');
+        tobi = characters.level1.create(922, 450, 'Tobi');
 
         var silo1 = constructionElements.level1.create(850, 400, 'silo');
         var block1 = constructionElements.level1.create(0, 0, 'block').alignTo(silo1, Phaser.TOP_LEFT, 0);
@@ -326,6 +339,9 @@ var createSilos = {
         );
     },
     'level2': function () {
+        francois.destroy();
+        tobi.destroy();
+
         constructionElements.level2 = game.add.group();
 
         var silo1 = constructionElements.level2.create(850, 400, 'silo');
