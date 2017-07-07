@@ -61,7 +61,7 @@ function preload() {
 
     // Sounds
     game.load.audio('backgroundmusic', 'assets/audio/background.mp3');
-    game.load.audio('effects', 'assets/audio/magical_horror_audiosprite.mp3');
+    game.load.audio('magicaleffects', 'assets/audio/magical_horror_audiosprite.mp3');
     game.load.audio('boingeffect', 'assets/audio/boing.wav');
     game.load.audio('laugheffect', 'assets/audi/laugh.mp3');
 }
@@ -100,7 +100,7 @@ function create() {
     music.volume = 0.5;
     music.play();
 
-    effects = game.add.audio('sounds');
+    effects = game.add.audio('magicaleffects');
     effects.allowMultiple = false;
     effects.addMarker('fireball', 8, 5.2);
 
@@ -277,6 +277,8 @@ var collisionHandler = function (ball, element) {
         explosion.reset(element.body.x, element.body.y);
         element.destroy();
         explosion.play('kaboom', 50, false, true);
+        effects.resume();
+        effects.play('fireball');
 
         if ('silo' === element.key) {
             score += 20;
