@@ -80,6 +80,9 @@ function create() {
     level++;
     shoots = 3;
 
+    game.stage.scale.pageAlignHorizontally = true;
+    game.stage.scale.pageAlignVertically = true;
+
     /*******************************/
     /* Define the world appearance */
     /*******************************/
